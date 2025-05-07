@@ -1,0 +1,33 @@
+# Node.js
+/node_modules/
+/npm-debug.log
+/package-lock.json
+/yarn.lock
+
+# React
+/build/
+/public/static/
+/coverage/
+
+# Prisma
+/.env
+/prisma/migrations/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Vercel deployment
+/.vercel/
+
+# IDEs and editors
+/.idea/
+/.vscode/
+/*.swp
+
+# dotenv environment files
+.env.local
+.env.*.local
