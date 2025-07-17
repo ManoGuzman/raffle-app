@@ -1,80 +1,90 @@
-import React, { useEffect, useState } from 'react';
-import { getAvailableNumbers } from '../services/api';
-import { useNavigate } from 'react-router-dom';
-import { useReservation } from '../context/ReservationContext';
+import React, { useEffect, useState } from "react";
+import NumberGrid from "../components/NumberGrid";
+import ReservationModal from "../components/ReservationModal";
+import PaymentConfirmation from "../components/PaymentConfirmation";
+import { fetchNumbers } from "../services/api";
+import { useReservation } from "../context/ReservationContext";
 
-export default function HomePage() {
+const HomePage = () => {
   const [numbers, setNumbers] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const { setReservedNumbers } = useReservation();
-  const [selected, setSelected] = useState(new Set());
-  const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
+
+  const {
+    selectedNumbers,
+    toggleNumber,
+    reservationData,
+    saveReservation,
+    resetReservation,
+  } = useReservation();
 
   useEffect(() => {
-    getAvailableNumbers()
-      .then((data) => {
-        setNumbers(data);
-        setLoading(false);
-      })
-      .catch(() => {
-        setError('Failed to load numbers');
-        setLoading(false);
-      });
+    loadNumbers();
   }, []);
 
-  const toggleSelect = (id) => {
-    setSelected((prev) => {
-      const newSet = new Set(prev);
-      if (newSet.has(id)) newSet.delete(id);
-      else newSet.add(id);
-      return newSet;
-    });
+  const loadNumbers = async () => {
+    const data = await fetchNumbers();
+    setNumbers(data);
   };
 
-  const handleProceed = () => {
-    if (selected.size === 0) {
-      alert('Please select at least one number.');
-      return;
+  const handleOpenModal = () => {
+    if (selectedNumbers.length > 0) {
+      setShowModal(true);
+    } else {
+      alert("Por favor seleccione al menos un número antes de reservar.");
     }
-    setReservedNumbers(Array.from(selected));
-    navigate('/reserve');
   };
 
-  if (loading) return <p className="text-center mt-10">Loading numbers...</p>;
-  if (error) return <p className="text-center mt-10 text-red-600">{error}</p>;
+  const handleConfirmReservation = async (data) => {
+    // Aquí haces la llamada al backend, por ejemplo:
+    // await api.post('/reservas', { ...data, numeros: selectedNumbers });
+
+    // Guardamos localmente la info para mostrar confirmación y PDF
+    saveReservation({
+      name: data.name,
+      paymentMethod: data.paymentMethod,
+      phone: data.phone,
+      numeros: selectedNumbers,
+    });
+    setShowModal(false);
+    loadNumbers(); // refresca la lista para mostrar cambios si es necesario
+  };
+
+  const handleCloseConfirmation = () => {
+    resetReservation();
+  };
 
   return (
-    <div className="p-6">
-      <h1 className="text-3xl font-bold mb-6">Rifa - Elige tu número</h1>
-      <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-4">
-        {numbers.map(({ id, status }) => (
-          <div
-            key={id}
-            onClick={() => status === 'AVAILABLE' && toggleSelect(id)}
-            className={`rounded-xl shadow-md p-4 text-center cursor-pointer select-none
-              ${
-                status === 'AVAILABLE'
-                  ? selected.has(id)
-                    ? 'bg-blue-400 text-white'
-                    : 'bg-green-200 text-green-800 hover:bg-green-300'
-                  : status === 'RESERVED'
-                  ? 'bg-yellow-200 text-yellow-800 cursor-not-allowed'
-                  : 'bg-red-200 text-red-800 cursor-not-allowed'
-              }
-            `}
-          >
-            <div className="text-2xl font-bold">#{id}</div>
-            <div className="text-sm mt-1">{status}</div>
-          </div>
-        ))}
+    <div className="container mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4 text-center">Rifa de la Iglesia 🎟️</h1>
+
+      <NumberGrid
+        numbers={numbers}
+        selectedNumbers={selectedNumbers}
+        toggleNumber={toggleNumber}
+      />
+
+      <div className="flex justify-center mt-4">
+        <button
+          onClick={handleOpenModal}
+          className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+        >
+          Reservar seleccionados ({selectedNumbers.length})
+        </button>
       </div>
-      <button
-        onClick={handleProceed}
-        className="mt-6 px-6 py-3 bg-green-600 text-white rounded hover:bg-green-700"
-      >
-        Apartar Números Seleccionados
-      </button>
+
+      {showModal && (
+        <ReservationModal
+          selectedNumbers={selectedNumbers}
+          onClose={() => setShowModal(false)}
+          onConfirm={handleConfirmReservation}
+        />
+      )}
+
+      {reservationData && (
+        <PaymentConfirmation {...reservationData} onClose={handleCloseConfirmation} />
+      )}
     </div>
   );
-}
+};
+
+export default HomePage;

@@ -10,8 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "focus-trap-react": "^11.0.4",
+    "jspdf": "^3.0.1",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "react-toastify": "^11.0.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.30.1",

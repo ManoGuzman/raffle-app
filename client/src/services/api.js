@@ -1,27 +1,20 @@
-const API_BASE = import.meta.env.VITE_API_BASE_URL;
+const BASE_URL = "/api"; // ya con proxy no necesitas dominio completo
 
-export async function getAvailableNumbers() {
-  const res = await fetch(`${API_BASE}/numbers`);
-  if (!res.ok) throw new Error('Network response was not ok');
-  return res.json();
-}
+export const fetchNumbers = async () => {
+  const res = await fetch(`${BASE_URL}/numeros`);
+  if (!res.ok) throw new Error("Error fetching numbers");
+  return await res.json();
+};
 
-export async function reserveNumbers(data) {
-  const res = await fetch(`${API_BASE}/numbers/reserve`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data),
+export const postReservation = async (reservationData) => {
+  const res = await fetch(`${BASE_URL}/reservas`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(reservationData),
   });
-  if (!res.ok) throw new Error('Network response was not ok');
-  return res.json();
-}
-
-export async function confirmPurchase(data) {
-  const res = await fetch(`${API_BASE}/numbers/confirm`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data),
-  });
-  if (!res.ok) throw new Error('Network response was not ok');
-  return res.json();
-}
+  if (!res.ok) {
+    const error = await res.json();
+    throw new Error(error.message || "Error posting reservation");
+  }
+  return await res.json();
+};
