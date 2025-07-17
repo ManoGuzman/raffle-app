@@ -2,16 +2,19 @@
   "name": "server",
   "version": "1.0.0",
   "main": "index.js",
-"scripts": {
-  "dev": "nodemon src/server.js",
-  "start": "node src/server.js",
-  "test": "jest"
-},
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js",
+    "init:numbers": "node scripts/initNumbers.js",
+    "init:admin": "node scripts/initAdmin.js",
+    "test": "jest"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^6.8.2",
+    "bcrypt": "^6.0.0",
     "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
@@ -21,10 +24,13 @@
     "prisma": "^6.8.2"
   },
   "devDependencies": {
-    "nodemon": "^3.1.10"
+    "jest": "^30.0.4",
+    "nodemon": "^3.1.10",
+    "supertest": "^7.1.3"
   },
   "directories": {
     "test": "tests"
   },
-  "description": ""
+  "description": "",
+  "type": "module"
 }

@@ -67,6 +67,25 @@ const updateNumberStatus = async (req, res) => {
   }
 };
 
+export const getAllReservations = async (req, res) => {
+  try {
+    // Trae todos los números que no estén disponibles (reservados o vendidos)
+    const reservedNumbers = await prisma.number.findMany({
+      where: {
+        status: {
+          not: 'AVAILABLE',
+        },
+      },
+      orderBy: { number: 'asc' },
+    });
+
+    res.json(reservedNumbers);
+  } catch (error) {
+    console.error('Error fetching reservations:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
 module.exports = {
   loginAdmin,
   getAllNumbersAdmin,

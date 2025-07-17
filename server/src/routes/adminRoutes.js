@@ -16,4 +16,7 @@ router.get('/numbers', getAllNumbersAdmin);
 // Update status of a number (reserve, buy, etc)
 router.patch('/numbers/:number', updateNumberStatus);
 
-module.exports = router;
+// Ruta protegida
+router.get('/reservations', authenticateToken, getAllReservations);
+
+export default router;
