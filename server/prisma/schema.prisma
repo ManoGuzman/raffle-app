@@ -1,24 +1,31 @@
-generator client {
-  provider = "prisma-client-js"
-}
-
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
+generator client {
+  provider = "prisma-client-js"
+}
+
 model Number {
-  id        Int     @id @default(autoincrement())
-  number    Int     @unique
-  status    String  // 'available', 'reserved', 'sold'
-  buyerName String?
-  buyerPhone String?
-  paymentMethod String? // 'cash', 'sinpe'
-  reservedAt DateTime?
+  id          Int      @id @default(autoincrement())
+  number      Int      @unique
+  status      Status   @default(AVAILABLE)
+  reservedBy  String?  // Nombre de quien apartó o compró
+  email       String?  // Email para contacto
+  phone       String?  // Teléfono para SINPE o contacto
+  reservedAt  DateTime? // Fecha de reserva o compra
 }
 
 model Admin {
-  id       Int    @id @default(autoincrement())
-  username String @unique
-  password String
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  password  String   // hashed password
+  createdAt DateTime @default(now())
+}
+
+enum Status {
+  AVAILABLE
+  RESERVED
+  SOLD
 }
