@@ -6,15 +6,12 @@
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![License][license-shield]][license-url]
-[![Node.js][node-shield]][node-url]
-[![Vue][vue-shield]][vue-url]
-[![PostgreSQL][postgresql-shield]][postgresql-url]
 
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
   <a href="https://github.com/ManoGuzman/raffle-app">
-    <img src="https://img.icons8.com/?size=100&id=A2f4gaUwDSpk&format=png&color=000000" alt="Raffle Logo" width="80" height="80">
+    <img src="https://img.icons8.com/?size=100&id=sUfFbVqyPaVG&format=png&color=000000" alt="Raffle Logo" width="80" height="80">
   </a>
 
   <h3 align="center">Raffle App</h3>
@@ -82,14 +79,14 @@ Raffle App is a full-stack web application designed to manage a raffle of 200 nu
 
 ### Built With
 
-* [![Node.js][Node.js]][node-url]
-* [![Express][Express.js]][express-url]
-* [![Vue][Vue.js]][vue-url]
-* [![Vite][Vite.js]][vite-url]
-* [![PostgreSQL][PostgreSQL]][postgresql-url]
-* [![pnpm][pnpm]][pnpm-url]
-* [![Vitest][Vitest]][vitest-url]
-* [![Playwright][Playwright]][playwright-url]
+[![Node.js][Node.js]][node-url]
+[![Express][Express.js]][express-url]
+[![Vue][Vue.js]][vue-url]
+[![Vite][Vite.js]][vite-url]
+[![PostgreSQL][PostgreSQL]][postgresql-url]
+[![pnpm][pnpm]][pnpm-url]
+[![Vitest][Vitest]][vitest-url]
+[![Playwright][Playwright]][playwright-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
