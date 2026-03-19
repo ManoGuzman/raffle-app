@@ -1,27 +1,28 @@
-<!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
 <a id="readme-top"></a>
 
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
-[![License][license-shield]][license-url]
+[![project_license][license-shield]][license-url]
 
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
   <a href="https://github.com/ManoGuzman/raffle-app">
-    <img src="https://img.icons8.com/?size=100&id=sUfFbVqyPaVG&format=png&color=000000" alt="Raffle Logo" width="80" height="80">
+    <img src="https://img.icons8.com/?size=100&id=sUfFbVqyPaVG&format=png&color=000000" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">Raffle App</h3>
 
   <p align="center">
-    A web application to manage a 200-number raffle with online purchasing and admin dashboard.
+    A web application to manage a 200-number raffle with online purchase and admin dashboard.
     <br />
     <a href="https://github.com/ManoGuzman/raffle-app"><strong>Explore the docs »</strong></a>
     <br />
     <br />
+    <a href="https://github.com/ManoGuzman/raffle-app">View Demo</a>
+    &middot;
     <a href="https://github.com/ManoGuzman/raffle-app/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
     &middot;
     <a href="https://github.com/ManoGuzman/raffle-app/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
@@ -48,8 +49,7 @@
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
-    <li><a href="#api-endpoints">API Endpoints</a></li>
-    <li><a href="#frontend-routes">Frontend Routes</a></li>
+    <li><a href="#project-structure">Project Structure</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
@@ -63,15 +63,12 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-Raffle App is a full-stack web application designed to manage a raffle of 200 numbers with online purchasing capabilities and a comprehensive admin dashboard. Users can view available numbers, purchase tickets, while administrators have full control over ticket management and statistics.
+A full-stack web application for managing a raffle with 200 numbers. Features include:
 
-### Key Features
-
-- **Public Ticket Viewing**: Browse all 200 raffle numbers with real-time availability status
-- **Online Purchase**: Buy raffle tickets with buyer information collection
-- **Admin Dashboard**: Secure admin panel for ticket management and statistics
-- **JWT Authentication**: Secure admin authentication with token-based access
-- **Responsive Design**: Mobile-friendly interface built with Vue 3
+- **Public Landing Page**: Display all 200 raffle numbers in a visual grid
+- **Online Purchase**: Buyers can select and purchase available numbers
+- **Admin Dashboard**: Secure admin panel to manage tickets and view statistics
+- **Authentication**: JWT-based authentication for admin access
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -79,14 +76,12 @@ Raffle App is a full-stack web application designed to manage a raffle of 200 nu
 
 ### Built With
 
-[![Node.js][Node.js]][node-url]
-[![Express][Express.js]][express-url]
-[![Vue][Vue.js]][vue-url]
-[![Vite][Vite.js]][vite-url]
-[![PostgreSQL][PostgreSQL]][postgresql-url]
-[![pnpm][pnpm]][pnpm-url]
-[![Vitest][Vitest]][vitest-url]
-[![Playwright][Playwright]][playwright-url]
+* [![Vue][Vue.js]][Vue-url]
+* [![Vite][Vite.dev]][Vite-url]
+* [![Node.js][Node.js]][Node-url]
+* [![Express][Express.js]][Express-url]
+* [![PostgreSQL][PostgreSQL]][PostgreSQL-url]
+* [![JWT][JWT.io]][JWT-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -95,24 +90,21 @@ Raffle App is a full-stack web application designed to manage a raffle of 200 nu
 <!-- GETTING STARTED -->
 ## Getting Started
 
-Follow these instructions to set up the project locally for development and testing.
-
 ### Prerequisites
 
-- Node.js 18+
-- PostgreSQL 14+
-- pnpm (recommended) or npm
-- Docker & Docker Compose (for PostgreSQL)
+- **Node.js** 18+ and npm
+- **pnpm** (recommended) or npm
+- **Docker** and **Docker Compose** (for PostgreSQL)
+- **PostgreSQL** 14+ (or use Docker)
 
 ### Installation
 
-1. Clone the repository
+1. Clone the repo
    ```sh
    git clone https://github.com/ManoGuzman/raffle-app.git
-   cd raffle-app
    ```
 
-2. Install dependencies
+2. Install dependencies using pnpm (recommended)
    ```sh
    pnpm install
    ```
@@ -122,14 +114,14 @@ Follow these instructions to set up the project locally for development and test
    docker-compose up -d
    ```
 
-4. Create the database
+4. Create the database (first time only)
    ```sh
    psql -h localhost -U postgres -c "CREATE DATABASE raffle;"
    ```
 
 5. Configure environment variables
 
-   **Server** (`server/.env`):
+   Create `server/.env`:
    ```bash
    NODE_ENV=development
    PORT=3000
@@ -138,17 +130,19 @@ Follow these instructions to set up the project locally for development and test
    JWT_EXPIRES_IN=24h
    ```
 
-   **Client** (`client/.env`):
+   Create `client/.env`:
    ```bash
    VITE_API_URL=http://localhost:3000/api
    ```
 
-6. Start development servers
+6. Run the development servers
    ```sh
-   pnpm dev          # Both client and server
-   pnpm dev:server   # Server only (http://localhost:3000)
-   pnpm dev:client   # Client only (http://localhost:5173)
+   pnpm dev
    ```
+
+   This will start:
+   - Server at http://localhost:3000
+   - Client at http://localhost:5173
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -157,88 +151,89 @@ Follow these instructions to set up the project locally for development and test
 <!-- USAGE -->
 ## Usage
 
-### Public Users
-- Visit the home page to view all 200 raffle numbers
-- Click on available numbers to purchase
-- Fill in buyer information and complete purchase
+### Public Endpoints
 
-### Admin Users
-- Access `/admin/login` to authenticate
-- View dashboard with ticket statistics
-- Manage tickets (create, update, delete, reserve)
-- Monitor buyer information and purchase history
+| Route              | Description                       |
+| ------------------ | --------------------------------- |
+| `/`                | Landing page with 200-number grid |
+| `/comprar/:numero` | Purchase form for selected number |
 
-### Useful Commands
+### Admin Endpoints
 
-```bash
-# Development
-pnpm dev              # Start all services
-pnpm build            # Build for production
-pnpm clean            # Clean build artifacts
+| Route            | Description              |
+| ---------------- | ------------------------ |
+| `/admin/login`   | Admin login page         |
+| `/admin`         | Main admin dashboard     |
+| `/admin/tickets` | Ticket management        |
+| `/admin/stats`   | Statistics and analytics |
 
-# Testing
-pnpm test             # Unit + Integration tests
-pnpm test:unit        # Unit tests only
-pnpm test:e2e         # E2E tests (requires running server)
-pnpm test:coverage    # With coverage report
+### API Endpoints
 
-# Linting
-pnpm lint             # Check for errors
-pnpm lint:fix         # Auto-fix errors
-```
+**Auth**
+| Method | Endpoint             | Description                     |
+| ------ | -------------------- | ------------------------------- |
+| POST   | `/api/auth/login`    | Admin login                     |
+| POST   | `/api/auth/register` | Create first admin              |
+| GET    | `/api/auth/me`       | Get current user (JWT required) |
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+**Tickets (Public)**
+| Method | Endpoint                 | Description            |
+| ------ | ------------------------ | ---------------------- |
+| GET    | `/api/tickets`           | List all tickets       |
+| GET    | `/api/tickets/available` | List available tickets |
+| GET    | `/api/tickets/:id`       | Get ticket details     |
+| POST   | `/api/tickets/purchase`  | Purchase a ticket      |
 
-
-
-<!-- API ENDPOINTS -->
-## API Endpoints
-
-### Authentication (Public)
-
-| Method | Endpoint             | Description        |
-| ------ | -------------------- | ------------------ |
-| POST   | `/api/auth/login`    | Admin login        |
-| POST   | `/api/auth/register` | Create first admin |
-| GET    | `/api/auth/me`       | Current user       |
-
-### Tickets (Public)
-
-| Method | Endpoint                 | Description      |
-| ------ | ------------------------ | ---------------- |
-| GET    | `/api/tickets`           | List all tickets |
-| GET    | `/api/tickets/available` | Available only   |
-| GET    | `/api/tickets/:id`       | Ticket details   |
-| POST   | `/api/tickets/purchase`  | Purchase ticket  |
-
-### Tickets (Admin - JWT Required)
-
+**Tickets (Admin)**
 | Method | Endpoint                     | Description         |
 | ------ | ---------------------------- | ------------------- |
 | POST   | `/api/admin/tickets`         | Create ticket       |
 | PUT    | `/api/admin/tickets/:id`     | Update ticket       |
-| DELETE | `/api/admin/tickets/:id`     | Delete ticket       |
+| DELETE | `/api/admin/tickets/:id`     | Release ticket      |
 | POST   | `/api/admin/tickets/reserve` | Reserve ticket      |
-| GET    | `/api/admin/stats`           | View statistics     |
+| GET    | `/api/admin/stats`           | Get statistics      |
 | POST   | `/api/admin/tickets/bulk`    | Bulk create tickets |
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
-<!-- FRONTEND ROUTES -->
-## Frontend Routes
+<!-- PROJECT STRUCTURE -->
+## Project Structure
 
-| Path               | Component        | Description           |
-| ------------------ | ---------------- | --------------------- |
-| `/`                | HomeView         | Landing + ticket grid |
-| `/comprar/:numero` | PurchaseView     | Ticket purchase form  |
-| `/admin`           | AdminView        | Dashboard (protected) |
-| `/admin/login`     | LoginView        | Admin login           |
-| `/admin/tickets`   | AdminTicketsView | Ticket management     |
-| `/admin/stats`     | AdminStatsView   | Statistics view       |
+```
+raffle-app/
+├── client/                    # Vue.js frontend
+│   ├── src/
+│   │   ├── assets/styles/     # Global styles
+│   │   ├── features/          # Feature-based modules
+│   │   │   ├── tickets/       # Ticket purchase feature
+│   │   │   ├── admin/         # Admin dashboard feature
+│   │   │   └── auth/          # Authentication feature
+│   │   ├── shared/            # Shared components & composables
+│   │   ├── router/            # Vue Router config
+│   │   ├── App.vue
+│   │   └── main.ts
+│   ├── tests/                 # Unit, integration, e2e tests
+│   ├── Dockerfile
+│   └── vite.config.ts
+├── server/                    # Node.js/Express API
+│   ├── src/
+│   │   ├── features/          # Feature-based modules
+│   │   │   ├── auth/          # Auth feature
+│   │   │   └── tickets/       # Tickets feature
+│   │   ├── shared/            # Config, middleware, models, utils
+│   │   └── index.ts
+│   ├── tests/
+│   ├── Dockerfile
+│   └── package.json
+├── docker-compose.yml         # PostgreSQL setup
+├── .github/workflows/          # GitHub Actions CI/CD
+├── pnpm-workspace.yaml        # pnpm workspace config
+└── README.md
+```
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<p align="right">(<a href="#readme-top">back to top)</a></p>
 
 
 
@@ -246,15 +241,19 @@ pnpm lint:fix         # Auto-fix errors
 ## Roadmap
 
 - [x] Project setup and configuration
-- [ ] Database schema and models
-- [ ] JWT authentication system
-- [ ] Public ticket viewing and purchase
-- [ ] Admin dashboard and ticket management
-- [ ] CI/CD pipeline with GitHub Actions
-- [ ] Unit and integration testing
-- [ ] E2E testing with Playwright
-- [ ] Dokploy deployment configuration
-- [ ] Production SSL configuration
+- [ ] Database schema design
+- [ ] API endpoints implementation
+- [ ] Frontend structure and routing
+- [ ] Authentication (JWT)
+- [ ] Landing page with ticket grid
+- [ ] Purchase flow
+- [ ] Admin dashboard
+- [ ] Statistics and analytics
+- [ ] Unit tests (Vitest)
+- [ ] Integration tests
+- [ ] E2E tests (Playwright)
+- [ ] CI/CD pipeline (GitHub Actions)
+- [ ] Deployment (Dokploy)
 
 See the [open issues](https://github.com/ManoGuzman/raffle-app/issues) for a full list of proposed features.
 
@@ -275,6 +274,12 @@ Contributions are what make the open source community such an amazing place to l
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+### Top contributors
+
+<a href="https://github.com/ManoGuzman/raffle-app/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=ManoGuzman/raffle-app" alt="contrib.rocks image" />
+</a>
+
 
 
 <!-- LICENSE -->
@@ -289,6 +294,8 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
+Mano Guzman - [@ManoGuzman](https://twitter.com/ManoGuzman) - email@email.com
+
 Project Link: [https://github.com/ManoGuzman/raffle-app](https://github.com/ManoGuzman/raffle-app)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -298,16 +305,21 @@ Project Link: [https://github.com/ManoGuzman/raffle-app](https://github.com/Mano
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-* [Best-README-Template](https://github.com/othneildrew/Best-README-Template)
-* [Vue 3 Documentation](https://vuejs.org/)
-* [Node.js Documentation](https://nodejs.org/)
-* [PostgreSQL Documentation](https://www.postgresql.org/)
+* [Vue.js](https://vuejs.org/)
+* [Vite](https://vitejs.dev/)
+* [Node.js](https://nodejs.org/)
+* [Express](https://expressjs.com/)
+* [PostgreSQL](https://www.postgresql.org/)
+* [Vitest](https://vitest.dev/)
+* [Playwright](https://playwright.dev/)
+* [Dokploy](https://dokploy.com/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [contributors-shield]: https://img.shields.io/github/contributors/ManoGuzman/raffle-app.svg?style=for-the-badge
 [contributors-url]: https://github.com/ManoGuzman/raffle-app/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/ManoGuzman/raffle-app.svg?style=for-the-badge
@@ -317,20 +329,20 @@ Project Link: [https://github.com/ManoGuzman/raffle-app](https://github.com/Mano
 [issues-shield]: https://img.shields.io/github/issues/ManoGuzman/raffle-app.svg?style=for-the-badge
 [issues-url]: https://github.com/ManoGuzman/raffle-app/issues
 [license-shield]: https://img.shields.io/github/license/ManoGuzman/raffle-app.svg?style=for-the-badge
-[license-url]: https://github.com/ManoGuzman/raffle-app/blob/master/LICENSE
-[node-shield]: https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white
-[node-url]: https://nodejs.org/
-[vue-shield]: https://img.shields.io/badge/Vue.js-4FC08D?style=for-the-badge&logo=vuedotjs&logoColor=white
-[vue-url]: https://vuejs.org/
-[postgresql-shield]: https://img.shields.io/badge/PostgreSQL-336791?style=for-the-badge&logo=postgresql&logoColor=white
-[postgresql-url]: https://www.postgresql.org/
-[express-url]: https://expressjs.com/
-[express-shield]: https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white
-[vite-url]: https://vitejs.dev/
-[vite-shield]: https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white
-[pnpm-url]: https://pnpm.io/
-[pnpm-shield]: https://img.shields.io/badge/pnpm-F69220?style=for-the-badge&logo=pnpm&logoColor=white
-[vitest-url]: https://vitest.dev/
-[vitest-shield]: https://img.shields.io/badge/Vitest-6E9F18?style=for-the-badge&logo=vitest&logoColor=white
-[playwright-url]: https://playwright.dev/
-[playwright-shield]: https://img.shields.io/badge/Playwright-45ba4c?style=for-the-badge&logo=playwright&logoColor=white
+[license-url]: https://github.com/ManoGuzman/raffle-app/blob/master/LICENSE.txt
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-url]: https://linkedin.com/in/manuel-guzmán-b87b841bb/
+
+<!-- Shields.io badges -->
+[Vue.js]: https://img.shields.io/badge/Vue.js-4FC08D?style=for-the-badge&logo=vuedotjs&logoColor=white
+[Vue-url]: https://vuejs.org/
+[Vite.dev]: https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white
+[Vite-url]: https://vitejs.dev/
+[Node.js]: https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white
+[Node-url]: https://nodejs.org/
+[Express.js]: https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=express&logoColor=white
+[Express-url]: https://expressjs.com/
+[PostgreSQL]: https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white
+[PostgreSQL-url]: https://www.postgresql.org/
+[JWT.io]: https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=json-web-tokens&logoColor=white
+[JWT-url]: https://jwt.io/
